@@ -1,0 +1,30 @@
+# example
+
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: <release-name>-anchore-admission-controller.admission.anchore.io
+webhooks:
+- name: <release-name>-anchore-admission-controller.admission.anchore.io
+  clientConfig:
+    service:
+      namespace: default
+      name: kubernetes
+      path: /apis/admission.anchore.io/v1beta1/imagechecks
+    caBundle: "<hardcoded echo $KUBE_CA>"
+  rules:
+  - operations:
+    - CREATE
+    apiGroups:
+    - ""
+    apiVersions:
+    - "*"
+    resources:
+    - pods
+  failurePolicy: Fail
+# Uncomment this and customize to exclude specific namespaces from the validation requirement
+#  namespaceSelector:
+#    matchExpressions:
+#      - key: exclude.admission.anchore.io
+#        operator: NotIn
+#        values: ["true"]
