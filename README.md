@@ -35,7 +35,7 @@ kubectl -n <your-namespace> create secret generic anchore-credentials --from-fil
 ```
 helm install <release-name> --repo https://charts.anchore.io/stable anchore-admission-controller -n <your-namespace> -f <path-to-values.yaml>
 ```
-7. Copy the validating webhook config (provided in this repo) from the output of step 4 and apply it
+5. Copy the validating webhook config (provided in this repo) from the output of step 4 and apply it
 ```
 kubectl -n <your-namespace> apply -f validating-webhook.yaml
 ```
