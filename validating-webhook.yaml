@@ -11,7 +11,7 @@ webhooks:
       namespace: default
       name: kubernetes
       path: /apis/admission.anchore.io/v1beta1/imagechecks
-    caBundle: "<hardcoded echo $KUBE_CA>"
+    caBundle: null
   rules:
   - operations:
     - CREATE

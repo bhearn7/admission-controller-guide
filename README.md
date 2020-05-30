@@ -30,28 +30,17 @@ chmod +x cleanup.sh
 ```
 kubectl -n <your-namespace> create secret generic anchore-credentials --from-file=credentials.json
 ```
-3. Create _values.yaml_ (provided in this repo) and add your anchoreEndpoint, policySelectors, and Anchore Username with attached policyBundleId
+3. Create _values.yaml_ (provided in this repo) and add your anchoreEndpoint with desired policy configuration
 4. Install the controller
 ```
 helm install <release-name> --repo https://charts.anchore.io/stable anchore-admission-controller -n <your-namespace> -f <path-to-values.yaml>
 ```
-5. Set $KUBE_CA variable
-```
-KUBE_CA=$(kubectl config view --minify=true --flatten -o json | jq '.clusters[0].cluster."certificate-authority-data"' -r)
-```
-6. **Bug fix workaround** Create a _validating-webhook.yaml_ from the helm install output and hardcode the $KUBE_CA variable into caBundle
-```
-echo $KUBE_CA
-
-# hardcode the output into validating-webhook.yaml
-caBundle: "output from previous echo command wrapped in quotes"
-```
-7. Apply the validating webhook config
+7. Copy the validating webhook config (provided in this repo) from the output of step 4 and apply it
 ```
 kubectl -n <your-namespace> apply -f validating-webhook.yaml
 ```
 
-## Test
+## Testing with Mode: policy
 - **Example 1 FAIL** (does not deploy container into cluster)
 ```
 kubectl -n <your-namespace> run -it debian-latest --restart=Never --image debian:latest /bin/sh

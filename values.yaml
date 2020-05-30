@@ -2,7 +2,7 @@
 
 credentialsSecret: anchore-credentials
 anchoreEndpoint: "<your-anchore-endpoint>" # modify this
-policySelectors: # add more Selectors to your preference
+policySelectors:
   - Selector:
       ResourceType: "image"
       SelectorKeyRegex: ".*"
@@ -10,7 +10,8 @@ policySelectors: # add more Selectors to your preference
     PolicyReference:
       Username: "<your-anchore-username>" # modify this
       # This is the default bundle id in anchore engine
-      PolicyBundleId: "2c53a13c-1765-11e8-82ef-23527761d060" # add your PolicyBundleId
+      PolicyBundleId: "2c53a13c-1765-11e8-82ef-23527761d060"
     # Mode is one of: "policy", "analysis", or "breakglass". policy=>require policy pass, analysis=>require image analyzed, breakglass=>do nothing
-    Mode: policy # modify this to your preference
-requestAnalysis: true # modify this to your preference
+    Mode: policy
+# Request analysis of images if not already analyzed. This is the default if the above two are false, but is ignored if strict gating or analysis gating are true
+requestAnalysis: true
