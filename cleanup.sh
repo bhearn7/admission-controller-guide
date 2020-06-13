@@ -17,3 +17,5 @@ kubectl -n ${ns} delete cm/${1}-init-ca
 kubectl -n ${ns} delete job/${1}-init-ca
 kubectl delete APIService/v1beta1.admission.anchore.io
 kubectl -n ${ns} delete secret/${1}-anchore-admission-controller-certs
+kubectl -n ${ns} delete secret/anchore-admission-controller-certs
+kubectl -n ${ns} delete secret/anchore-credentials
